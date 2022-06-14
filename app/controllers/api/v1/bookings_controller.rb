@@ -1,6 +1,6 @@
 class Api::V1::BookingsController < ApplicationController
 
-  #POST /bookings/book/
+  #POST /courts/book
   def book
     @customer = Customer.find(params[:customer])
     @court = Court.find_by_code(params[:court])
@@ -13,14 +13,15 @@ class Api::V1::BookingsController < ApplicationController
       @booked = Booking.where("((`from` <= :from AND :from < `to`)
                                   OR (`from` < :to AND :to <= `to`)
                                   OR (:from <= `from` AND `from` < :to))
-                                  AND court_id = :court",
+                                  AND court_id = :court AND status = 'CONFIRMED'",
                               { from: params[:time], to: @to, court: @court.id }).limit(1)
       if @booked.count == 0
         @booking = Booking.new(
           :customer => @customer,
           :court => @court,
           :from => params[:time],
-          :to => @to
+          :to => @to,
+          :status => 'CONFIRMED'
         )
         if @booking.save
           render json: @booking
@@ -35,51 +36,26 @@ class Api::V1::BookingsController < ApplicationController
     end
   end
 
-  # GET /bookings
-  def index
-    @bookings = Booking.all
-    render json: @bookings
+  #POST /courts/booked
+  def booked
+    from = params[:date] + ' 00:00:00+00:00'
+    to = params[:date] + ' 23:59:59+00:00'
+    @booked = Booking.where("((`from` >= :from AND `to` <= :to))
+                                  AND status = 'CONFIRMED'",
+                            { from: from, to: to})
+
+    render json: @booked
   end
 
-  # GET  /booking/:id
-  def show
-    @booking = Booking.find(params[:id])
-    render json: @booking
-  end
-
-  # POST /bookings
-  def create
-    @booking = Booking.new(booking_params)
-    if @booking.save
-      render json: @booking
-    else
-      render error: { error: 'Unable to create Booking.' }, status: 400
-    end
-  end
-
-  # PUT /bookings/:id
-  def update
+  #POST /courts/cancel
+  def cancel
     @booking = Booking.find(params[:id])
     if @booking
-      @booking.update(booking_params)
-      render json: { message: 'Booking successfully update. ' }, status: 200
+      @booking.update(:status => 'CANCELLED')
+      render json: { message: 'Booking successfully cancelled. ' }, status: 200
     else
       render json: { error: 'Unable to update booking. ' }, status: 400
     end
   end
 
-  # DELETE /bookings/:id
-  def destroy
-    @booking = Booking.find(params[:id])
-    if @booking
-      @booking.destroy
-      render json: { message: 'Booking successfully deleted. ' }, status: 200
-    else
-      render json: { error: 'Unable to delete Booking. ' }, status: 400
-    end
-  end
-
-  private def booking_params
-    params.require(:booking).permit(:customer_id, :court_id, :from, :to)
-  end
 end

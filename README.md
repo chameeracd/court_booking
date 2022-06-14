@@ -1,24 +1,41 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Book Court - Simple ROR RESTfull API to book sport complex
 
-Things you may want to cover:
+## Setup
+`git clone git@github.com:chameeracd/court_booking.git`
 
-* Ruby version
+`cd court_booking`
 
-* System dependencies
+`bundle install`
 
-* Configuration
+`rails db:reset`
 
-* Database creation
+## Run
+`rails server`
 
-* Database initialization
+## API's
+### book :
+`POST http://127.0.0.1:3000/api/v1/courts/book`
 
-* How to run the test suite
+`{
+"customer":1,
+"court":"T001",
+"time":"2022-06-12 23:59:01+00:00"
+}`
 
-* Services (job queues, cache servers, search engines, etc.)
 
-* Deployment instructions
+### booked :
+`POST http://127.0.0.1:3000/api/v1/courts/booked`
 
-* ...
+`{
+"date":"022-06-12"
+}`
+
+
+### cancel :
+`POST http://127.0.0.1:3000/api/v1/courts/cancel`
+
+`{
+"id":1
+}`

@@ -8,6 +8,8 @@ Rails.application.routes.draw do
       resources :customers
       resources :courts
       post "courts/book", to: "bookings#book"
+      post "courts/booked", to: "bookings#booked"
+      post "courts/cancel", to: "bookings#cancel"
     end
   end
 end
