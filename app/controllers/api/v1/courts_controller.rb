@@ -44,6 +44,6 @@ class Api::V1::CourtsController < ApplicationController
   end
 
   private def court_params
-    params.require(:court).permit(:name, :code, :type)
+    params.require(:court).permit(:name, :code, :kind)
   end
 end

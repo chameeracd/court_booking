@@ -3,7 +3,7 @@ class CreateCourts < ActiveRecord::Migration[7.0]
     create_table :courts do |t|
       t.string :name
       t.string :code
-      t.string :type
+      t.string :kind
 
       t.timestamps
     end

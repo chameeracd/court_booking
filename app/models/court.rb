@@ -3,6 +3,6 @@ class Court < ApplicationRecord
 
   validates :name, presence: true
   validates :code, presence: true
-  validates :type, presence: true
+  validates :kind, presence: true
   validates :code, uniqueness: true
 end
