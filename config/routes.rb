@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :customers
       resources :courts
+      post "courts/book", to: "bookings#book"
     end
   end
 end

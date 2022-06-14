@@ -14,4 +14,7 @@ Court.create(name: 'Court 1', code: 'T001', kind: 'tennis')
 Court.create(name: 'Court 2', code: 'T002', kind: 'tennis')
 Court.create(name: 'Court 3', code: 'B001', kind: 'badminton')
 Court.create(name: 'Court 4', code: 'B002', kind: 'badminton')
+
+Booking.create(customer_id: 1, court_id: 1, from: '2022-06-13 08:00:00', to: '2022-06-13 09:00:00')
+Booking.create(customer_id: 2, court_id: 1, from: '2022-06-13 09:00:00', to: '2022-06-13 10:00:00')
 puts "Seeding done."

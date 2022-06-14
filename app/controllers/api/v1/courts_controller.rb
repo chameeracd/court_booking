@@ -17,7 +17,7 @@ class Api::V1::CourtsController < ApplicationController
     if @court.save
       render json: @court
     else
-      render error: { error: 'Unable to create Court.' }, status: 400
+      render json: { error: 'Unable to create Court.' }, status: 400
     end
   end
 

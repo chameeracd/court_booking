@@ -17,7 +17,7 @@ class Api::V1::CustomersController < ApplicationController
     if @customer.save
       render json: @customer
     else
-      render error: { error: 'Unable to create Customer.' }, status: 400
+      render json: { error: 'Unable to create Customer.' }, status: 400
     end
   end
 
